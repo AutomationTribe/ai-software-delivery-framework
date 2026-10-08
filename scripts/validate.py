@@ -36,12 +36,47 @@ def check(cond, good, problem):
     ok(good) if cond else bad(problem)
 
 def parse_frontmatter(text):
-    m = re.match(r"^---\n(.*?)\n---\n", text, re.S)
-    if not m: return None
+    """Parse the deliberately restricted, single-line YAML scalar frontmatter schema.
+
+    The framework's agent metadata uses only scalar key/value pairs. Reject YAML
+    constructs outside that subset rather than silently accepting invalid YAML.
+    No external YAML dependency is needed.
+    """
+    m = re.match(r"^---\\r?\\n(.*?)\\r?\\n---(?:\\r?\\n|$)", text, re.S)
+    if not m:
+        raise ValueError("missing or unterminated YAML frontmatter")
     out = {}
-    for line in m.group(1).splitlines():
-        if ":" in line:
-            k, v = line.split(":", 1); out[k.strip()] = v.strip()
+    for line_no, line in enumerate(m.group(1).splitlines(), 2):
+        if not line.strip() or line.startswith("#"):
+            continue
+        match = re.fullmatch(r"([A-Za-z_][A-Za-z0-9_-]*):[ \\t]+(.+)", line)
+        if not match:
+            raise ValueError(f"line {line_no}: expected unindented key: scalar")
+        key, value = match.groups()
+        if key in out:
+            raise ValueError(f"line {line_no}: duplicate key {key!r}")
+        value = value.strip()
+        if value.startswith('"'):
+            try:
+                parsed = json.loads(value)
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"line {line_no}: invalid double-quoted scalar: {exc}") from exc
+            if not isinstance(parsed, str):
+                raise ValueError(f"line {line_no}: expected string scalar")
+            value = parsed
+        elif value.startswith("'"):
+            if not re.fullmatch(r"'(?:[^']|'')*'", value):
+                raise ValueError(f"line {line_no}: invalid single-quoted scalar")
+            value = value[1:-1].replace("''", "'")
+        else:
+            # YAML plain scalars cannot contain a colon followed by whitespace,
+            # or a whitespace-prefixed comment marker. This catches the v1.1.0
+            # devops description that the old split(':', 1) parser accepted.
+            if re.search(r":(?=\\s|$)|\\s#", value):
+                raise ValueError(f"line {line_no}: invalid unquoted YAML scalar")
+            if value[0] in "{}[]&*!|>%@`":
+                raise ValueError(f"line {line_no}: unsupported YAML scalar syntax")
+        out[key] = value
     return out
 
 def agent_checks(agent_dir, label, strict_set):
@@ -51,9 +86,11 @@ def agent_checks(agent_dir, label, strict_set):
         check(sorted(names) == sorted(EXPECTED_AGENTS), f"{label}: all {len(EXPECTED_AGENTS)} framework agents present",
               f"{label}: agent set mismatch; missing={sorted(set(EXPECTED_AGENTS)-set(names))} extra={sorted(set(names)-set(EXPECTED_AGENTS))}")
     for f in files:
-        fm = parse_frontmatter(f.read_text())
-        if fm is None:
-            bad(f"{f.name}: missing frontmatter"); continue
+        try:
+            fm = parse_frontmatter(f.read_text())
+        except ValueError as exc:
+            bad(f"{f.name}: invalid frontmatter: {exc}")
+            continue
         for key in ("name", "description", "tools", "model"):
             check(bool(fm.get(key)), f"{f.name}: has {key}", f"{f.name}: missing/empty frontmatter '{key}'")
         check(fm.get("name") == f.stem, f"{f.name}: name matches filename", f"{f.name}: name '{fm.get('name')}' != filename")
@@ -140,4 +177,5 @@ def main():
     print(f"\n{len(passes)} passed, {len(fails)} failed")
     sys.exit(1 if fails else 0)
 
-main()
+if __name__ == "__main__":
+    main()
