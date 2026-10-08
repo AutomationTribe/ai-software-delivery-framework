@@ -1,0 +1,19 @@
+# Coding standards — {{PROJECT_NAME}}
+
+## Code readability profile
+
+Meanings: `docs/framework/POLICY.md` ("Project profiles"). The `backend`, `frontend`, `backend-reviewer`,
+`frontend-reviewer`, `database-architect` and `reviewer` agents read this file.
+
+> Selected profile: **{{MID-LEVEL | SENIOR | pending}}** (decided by {{who}}, {{date}})
+
+- **MID-LEVEL** — explicit, straightforward, easy to follow and debug, conservative with abstraction.
+- **SENIOR** — stronger abstractions allowed only when justified; readability stays mandatory either way.
+
+Reviewers have senior-level expertise but judge code against the selected profile; they do not demand
+needless abstraction.
+
+## Project conventions
+
+{{The project's own conventions: formatting/lint tools, naming, module layout, error handling, logging,
+deliberate "we avoid X" decisions (and the reason), testing conventions.}}

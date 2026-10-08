@@ -1,0 +1,53 @@
+# Project profile — {{PROJECT_NAME}}
+
+The framework's agents read this file to learn the project's choices and where its documents live. If a
+field is blank, agents say so rather than guess. This file is project-specific configuration; a framework
+upgrade never overwrites it.
+
+## Profiles (chosen by the human — agents never choose these)
+
+| Profile | Selected | Decided by / date |
+|---|---|---|
+| Project criticality (`PROTOTYPE` / `MVP` / `PRODUCTION` / `HIGH-CRITICALITY`) | {{pending}} | {{who, when}} |
+| Code readability (`MID-LEVEL` / `SENIOR`) | {{pending}} | {{who, when}} |
+
+Meanings of the options are defined in `docs/framework/POLICY.md` ("Project profiles"). Until a profile is
+selected, agents state the default they assume (criticality at least `MVP` for anything with real users or
+data; readability `MID-LEVEL`) and ask.
+
+## Where things live
+
+| What | Location |
+|---|---|
+| Requirements | {{path}} |
+| Product decisions | {{path}} |
+| Architecture / technology decisions | {{path}} |
+| Database design and decisions; schema | {{path}} |
+| API conventions and decisions | {{path}} |
+| API contract file (e.g. OpenAPI) | {{path}} |
+| Security documentation | {{path}} |
+| Coding standards (readability profile) | {{path}} |
+| ADR directory | {{path}} |
+| Technical-debt register | {{path}} |
+| Status log | {{path}} |
+| Design tool (e.g. Stitch) and project/space ID | {{value}} |
+| Design registry (approved screen names ↔ screen IDs) | {{path}} |
+| Saved reference images of approved designs | {{path}} |
+| Design handoffs | {{path}} |
+| Design system / shared components / tokens | {{path}} |
+
+## How things run
+
+| What | Command / procedure |
+|---|---|
+| Install dependencies | {{command}} |
+| Typecheck / lint | {{command}} |
+| Unit / integration tests | {{command}} |
+| End-to-end tests (and tags/classifications used) | {{command}} |
+| Run the app locally (for screenshots) | {{command}} |
+| Build | {{command}} |
+| Deploy (provider, procedure, who authorises) | {{path or description}} |
+
+## Stack (informational — agents inspect the repository rather than trust this)
+
+{{languages, frameworks, database, hosting}}

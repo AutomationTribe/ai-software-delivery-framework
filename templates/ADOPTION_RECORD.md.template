@@ -1,0 +1,25 @@
+# Framework adoption record — {{PROJECT_NAME}}
+
+| Field | Value |
+|---|---|
+| Framework version | {{1.1.0}} |
+| Adopted on | {{YYYY-MM-DD}} |
+| Adoption status | {{Adopted / In progress / Deferred}} |
+| Applicable agents | {{design, database-architect, backend, backend-reviewer, frontend, frontend-reviewer, reviewer, qa, security, devops — list those this project uses}} |
+| Previously completed work | Not reopened; no retrospective reviews required. |
+| Automated enforcement actually in place | {{e.g. "none" or "status-log Stop hook (tested YYYY-MM-DD)"}} |
+
+## Compatibility exceptions
+
+Each deliberate difference between this project and the canonical framework files (never an edit to the
+canonical files themselves).
+
+| Exception | Reason | Accepted by | Date |
+|---|---|---|---|
+| {{none}} | | | |
+
+## Upgrade history
+
+| Date | From | To | Commit | Notes |
+|---|---|---|---|---|
+| {{YYYY-MM-DD}} | {{—}} | {{1.1.0}} | {{sha}} | {{initial adoption}} |

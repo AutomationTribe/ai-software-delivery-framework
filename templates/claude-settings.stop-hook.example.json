@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "CHANGED=$(git status --porcelain -uall 2>/dev/null | grep -v -E '\\.DS_Store$|\\.tsbuildinfo$'); if [ -n \"$CHANGED\" ] && ! echo \"$CHANGED\" | grep -q \"docs/PROJECT_STATUS.md\"; then printf '%s' '{\"decision\":\"block\",\"reason\":\"The repo has uncommitted changes but docs/PROJECT_STATUS.md was not updated. Update the status log now (date, commit, completed work, tests actually run and results, blockers, next three tasks), then finish again. Never mark untested work as complete.\"}'; else printf '{}'; fi",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

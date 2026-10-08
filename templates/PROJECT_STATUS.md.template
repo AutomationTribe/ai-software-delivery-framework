@@ -1,0 +1,39 @@
+# {{PROJECT_NAME}} — Project Status
+
+The single source of truth for "what is actually done, actually tested and actually deployed right now".
+Updated after every task. Never mark work complete unless its tests were actually run and passed; report
+untested work as untested.
+
+---
+
+## Latest entry
+
+### {{YYYY-MM-DD}} — {{title}}
+
+**Branch/commit:** {{branch, sha}}
+
+**Completed work:**
+- {{...}}
+
+**Review results:** {{database-architect / backend-reviewer / frontend-reviewer (engineering + design
+conformance) / reviewer / qa / security — verdict and any HIGH/MEDIUM findings; list any MEDIUM exception the
+human explicitly accepted, with who and why}}
+
+**Tests actually run and results:** {{commands and pass/fail/counts}}
+
+**Not verified / limits:** {{...}}
+
+**Deployment/demo link:** {{...}}
+
+**Blockers:** {{...}}
+
+**Next three tasks:**
+1. {{...}}
+2. {{...}}
+3. {{...}}
+
+---
+
+## Previous entries
+
+{{older entries, newest first}}

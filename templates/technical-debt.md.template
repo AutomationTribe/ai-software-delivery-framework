@@ -1,0 +1,24 @@
+# Technical debt register — {{PROJECT_NAME}}
+
+A lightweight register of meaningful gaps — things with a real, explainable impact and priority. Not a
+dumping ground for cosmetic nitpicks. An entry is not an instruction to fix it immediately: existing code is
+revisited when touched by new work, a defect, a security issue, a material architecture problem, or an
+explicit request. LOW review findings the team chooses not to fix now may be recorded here.
+
+## TD-001 — {{short title}} — {{OPEN | RESOLVED YYYY-MM-DD}}
+
+**Where:** {{file/module}}
+
+**What:** {{the gap, and the trade-off that made it acceptable}}
+
+**Impact:** {{what could go wrong}}
+
+**When to address:** {{trigger or priority}}
+
+---
+
+## How to use this register
+
+- Add an entry when you knowingly accept debt to ship something; state the trade-off at the time.
+- Mark an entry resolved (keep the record) once it is fixed; reference the commit.
+- Do not add trivial cosmetic issues.
